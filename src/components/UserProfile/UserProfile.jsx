@@ -9,7 +9,7 @@ const UserProfile = () => {
     useEffect(() => {
         const token = localStorage.getItem("token")
 
-        fetch("http://localhost:4001/user/info", {
+        fetch("http://localhost:4000/user/info", {
             method: "GET",
             headers: {
                 "content-type": "application/json",
@@ -18,28 +18,6 @@ const UserProfile = () => {
         })
             .then(res => res.json())
             .then(res => setUserData(res))
-        // setUserData({
-        //     id: 1,
-        //     name: "EricWithC04",
-        //     email: "negativegame117@gmail.com",
-        //     password: "$2b$07$AGTLb6SWVqt52CsiTkoAzuS3gY.rM7AOJEFaC5BLnV68Dc676WCP2",
-        //     description: "Estudiante de Desarrollo de Software",
-        //     ocupation: null,
-        //     problem: null,
-        //     createdAt: "2023-10-18T14:53:08.000Z",
-        //     updatedAt: "2023-10-18T14:53:08.000Z",
-        //     deletedAt: null,
-        //     subscriptionPayload: null,
-        //     preferences: [
-        //         {
-        //             time_day: "Día",
-        //             subject: "Economía",
-        //             contact: "",
-        //             people: "tutoría",
-        //             contact_type: "534534535"
-        //         }
-        //     ]
-        // })
     }, [])
 
     return (
