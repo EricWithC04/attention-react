@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import userImg from "../../assets/user.jpg"
 import "./UserProfile.css"
 
 const UserProfile = () => {
+
+    const navigate = useNavigate()
 
     const [userData, setUserData] = useState({})
 
@@ -20,6 +23,10 @@ const UserProfile = () => {
             .then(res => setUserData(res))
     }, [])
 
+    const handleClick = (e) => {
+        navigate(e.target.value)
+    }
+
     return (
         <div className="container">
             {
@@ -29,10 +36,23 @@ const UserProfile = () => {
                             <img src={userImg} className="profile rounded-circle mt-4 mb-4 ms-5" alt="foto" />
                             <div className="ms-5 mt-5 text-color">
                                 <h2 className="fw-bold purple mb-3" id="name">{userData.name}</h2>
-                                <h4 id="description">{userData.description}</h4>
+                                <h4 id="description">{userData.ocupation}</h4>
                                 <h4 className="lead lead-size" id="email">{userData.email}</h4>
                             </div>
-                            <button className="btn btn-size bg-purple text-white align-self-end ms-auto" id="btn-preferences">Preferencias</button>
+                            <button 
+                                className="btn btn-size bg-purple text-white align-self-end ms-auto btn-text-size"
+                                value="/userData"
+                                onClick={handleClick}
+                            >
+                                Datos Personales
+                            </button>
+                            <button 
+                                className="btn btn-size bg-purple text-white align-self-end ms-auto"
+                                value="/preferences"
+                                onClick={handleClick}
+                            >
+                                Preferencias
+                            </button>
                         </div>
                         <div className="text-color border p-4 border-3 rounded-2 bg-grey z-position">
                             <legend>Se le dificulta: </legend>

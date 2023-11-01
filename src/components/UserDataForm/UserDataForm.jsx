@@ -22,6 +22,15 @@ const UserDataForm = () => {
             .catch(err => console.error(err))
     }, [])
 
+    const handleChange = (e) => {
+        const newData = {
+            ...userData,
+            [e.target.name]: e.target.value
+        }
+        console.log(newData)
+        setUserData(newData)
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault()
         if (!errorsActive) setErrorsActive(true)
@@ -31,13 +40,13 @@ const UserDataForm = () => {
         if (!Object.keys(errors).length) {
             const token = localStorage.getItem("token")
 
-            fetch("http://localhost:3000/api/users/preferences", {
-                method: "POST",
+            fetch("http://localhost:4000/user/info", {
+                method: "PUT",
                 headers: {
                     "content-type": "application/json",
                     "authorization": token
                 },
-                body: JSON.stringify(preferences),
+                body: JSON.stringify(userData),
             })
                 .then(res => res.json())
                 .then((res) => console.log(res))
@@ -71,6 +80,7 @@ const UserDataForm = () => {
             action=""
             className="d-flex flex-column border border-3 rounded-3 w-50 mt-5 mb-4 text-color bg-grey"
             id="formulario"
+            onChange={handleChange}
             onSubmit={handleSubmit}
         >
             <h1 class="fs-1 m-3 purple align-self-center">Datos de Usuario</h1>
