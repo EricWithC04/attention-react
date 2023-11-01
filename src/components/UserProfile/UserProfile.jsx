@@ -20,7 +20,10 @@ const UserProfile = () => {
             }
         })
             .then(res => res.json())
-            .then(res => setUserData(res))
+            .then(res => {
+                console.log(res);
+                setUserData(res)
+            })
     }, [])
 
     const handleClick = (e) => {
@@ -39,14 +42,14 @@ const UserProfile = () => {
                                 <h4 id="description">{userData.ocupation}</h4>
                                 <h4 className="lead lead-size" id="email">{userData.email}</h4>
                             </div>
-                            <button 
+                            <button
                                 className="btn btn-size bg-purple text-white align-self-end ms-auto btn-text-size"
                                 value="/userData"
                                 onClick={handleClick}
                             >
                                 Datos Personales
                             </button>
-                            <button 
+                            <button
                                 className="btn btn-size bg-purple text-white align-self-end ms-auto"
                                 value="/preferences"
                                 onClick={handleClick}
@@ -56,16 +59,16 @@ const UserProfile = () => {
                         </div>
                         <div className="text-color border p-4 border-3 rounded-2 bg-grey z-position">
                             <legend>Se le dificulta: </legend>
-                            <p id="subject">{userData.preferences[0].subject}</p>
+                            <p id="subject">{userData.preferences.length ? userData.preferences[0].subject : "No especificado!"}</p>
                             <hr />
                             <legend>Puede estudiar:</legend>
-                            <p id="time_day">{userData.preferences[0].time_day}</p>
+                            <p id="time_day">{userData.preferences.length ? userData.preferences[0].time_day : "No especificado!"}</p>
                             <hr />
                             <legend>Busca</legend>
-                            <p id="people">{userData.preferences[0].people}</p>
+                            <p id="people">{userData.preferences.length ? userData.preferences[0].people : "No especificado!"}</p>
                             <hr />
                             <legend>Puede contactarse a traves de:</legend>
-                            <p id="contact">{`${userData.preferences[0].contact} : ${userData.preferences[0].contact_type}`}</p>
+                            <p id="contact">{userData.preferences.length ? `${userData.preferences[0].contact_type}: ${userData.preferences[0].contact}` : "No especificado!"}</p>
                         </div>
                     </div>
                 ) : <div>Cargando...</div>

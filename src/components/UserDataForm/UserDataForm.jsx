@@ -1,7 +1,11 @@
 import React, { useEffect, useState, useMemo } from 'react'
+import { useNavigate } from 'react-router-dom'
+import Swt from "sweetalert2"
 import logo from "../../assets/logo-2.png"
 
 const UserDataForm = () => {
+
+    const navigate = useNavigate()
 
     const [userData, setUserData] = useState({})
 
@@ -37,7 +41,12 @@ const UserDataForm = () => {
 
         console.log(errors)
 
-        if (!Object.keys(errors).length) {
+        if (
+            !errors.name.length &&
+            !errors.ocupation.length &&
+            !errors.description.length &&
+            !errors.email.length
+        ) {
             const token = localStorage.getItem("token")
 
             fetch("http://localhost:4000/user/info", {
@@ -49,31 +58,35 @@ const UserDataForm = () => {
                 body: JSON.stringify(userData),
             })
                 .then(res => res.json())
-                .then((res) => console.log(res))
+                .then((res) => {
+                    Swt.fire({
+                        icon: "success",
+                        title: "Datos actualizado correctamente!"
+                    }),
+                        setTimeout(() => {
+                            navigate("/")
+                        }, 2000);
+                })
         }
 
     }
 
+    const regExp = {
+        email: /^(([^<>()\[\]\\.,;:\s@”]+(\.[^<>()\[\]\\.,;:\s@”]+)*)|(“.+”))@((\[[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}])|(([a-zA-Z\-0–9]+\.)+[a-zA-Z]{2,}))$/
+    }
+
     const errors = useMemo(() => {
         let formErrors = {}
-        // if (!errorsActive) return {};
-        // if (!preferences.subject.length) formErrors.subject = "Debes elegír una materia!"
-        // if (!preferences.time_day.length) formErrors.time_day = "Debes elegír un momento del día!"
-        // if (!preferences.people.length) formErrors.people = "Debes elegír que estas buscando!"
-        // if (!preferences.contact_type.length) formErrors.contact_type = "Debes elegír el tipo de contacto!"
-        // if (!preferences.contact.length) formErrors.contact = "Debes ingresar tus datos de contacto!"
-        // if (preferences.contact_type === "Numero Telefónico" && preferences.contact.length < 11) {
-        //     formErrors.contact = "Debes agregar un numero telefonico valido"
-        // }
-        // if (preferences.contact_type === "Discord" && !preferences.contact.length) {
-        //     formErrors.contact = "Debes agregar tu usuario de Discord!"
-        // }
-        // if (preferences.contact_type === "Slack" && !preferences.contact.length) {
-        //     formErrors.contact = "Debes agregar tu usuario de Slack!"
-        // }
+        if (!errorsActive) return {};
+        if (!userData.name.length) formErrors.name = "El nombre de usuario no debe estár vacío!"
+        else if (userData.name.length < 8) formErrors.name = "El nombre de usuario es demasiado corto!"
+        else if (userData.name.length > 40) formErrors.name = "El nombre de usuario es demasiado largo!"
+        if (!userData.ocupation.length) formErrors.ocupation = "Debes agregar tu ocupación!"
+        if (!userData.email.length) formErrors.email = "Tu email no puede estár vacío!"
+        else if (!regExp.email.test(userData.email)) formErrors.email = "Debe ser un email valido!"
 
         return formErrors;
-    }, [errorsActive])
+    }, [userData, errorsActive])
 
     return (
         <form
@@ -91,13 +104,41 @@ const UserDataForm = () => {
                     </label>
                     <input name="name" className="form-control" value={userData.hasOwnProperty("name") ? userData.name : ""} />
                 </div>
+                <div>
+                    {
+                        errors.hasOwnProperty("name") && errors.name.length ?
+                            (<p className="bg-danger text-white ms-2 me-2 rounded p-1">{errors.name}</p>) : null
+                    }
+                </div>
                 <div className="m-3">
                     <label className="form-label">Ocupación</label>
                     <input name="ocupation" className="form-control" value={userData.hasOwnProperty("ocupation") ? userData.ocupation : ""} />
                 </div>
+                <div>
+                    {
+                        errors.hasOwnProperty("ocupation") && errors.ocupation.length ?
+                            (<p className="bg-danger text-white ms-2 me-2 rounded p-1">{errors.ocupation}</p>) : null
+                    }
+                </div>
                 <div className="m-3">
                     <label className="form-label">Breve descripción de su problema</label>
                     <input type="text" name="problem" className='form-control' value={userData.hasOwnProperty("problem") ? userData.problem : ""} />
+                </div>
+                <div>
+                    {
+                        errors.hasOwnProperty("description") && errors.description.length ?
+                            (<p className="bg-danger text-white ms-2 me-2 rounded p-1">{errors.description}</p>) : null
+                    }
+                </div>
+                <div className="m-3">
+                    <label className="form-label">Email</label>
+                    <input type="text" name="email" className='form-control' value={userData.hasOwnProperty("email") ? userData.email : ""} />
+                </div>
+                <div>
+                    {
+                        errors.hasOwnProperty("email") && errors.email.length ?
+                            (<p className="bg-danger text-white ms-2 me-2 rounded p-1">{errors.email}</p>) : null
+                    }
                 </div>
             </div>
             <input

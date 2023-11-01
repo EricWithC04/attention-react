@@ -1,8 +1,12 @@
 import React, { useState, useMemo } from 'react'
+import { useNavigate } from 'react-router-dom'
+import Swt from "sweetalert2"
 import logo from "../../assets/logo-2.png"
 import "./PreferencesForm.css"
 
 const PreferencesForm = () => {
+
+    const navigate = useNavigate()
 
     const [preferences, setPreferences] = useState({
         subject: "",
@@ -34,7 +38,7 @@ const PreferencesForm = () => {
         if (!Object.keys(errors).length) {
             const token = localStorage.getItem("token")
 
-            fetch("http://localhost:3000/api/users/preferences", {
+            fetch("http://localhost:4000/api/users/preferences", {
                 method: "POST",
                 headers: {
                     "content-type": "application/json",
@@ -43,7 +47,15 @@ const PreferencesForm = () => {
                 body: JSON.stringify(preferences),
             })
                 .then(res => res.json())
-                .then((res) => console.log(res))
+                .then((res) => {
+                    Swt.fire({
+                        icon: "success",
+                        title: "Datos actualizado correctamente!"
+                    }),
+                        setTimeout(() => {
+                            navigate("/")
+                        }, 2000);
+                })
         }
 
     }
@@ -174,7 +186,7 @@ const PreferencesForm = () => {
                             <input
                                 type="radio"
                                 className="form-check-input"
-                                name="contact_type"
+                                name="contact"
                                 id="slack"
                                 value="Slack"
                             />
@@ -182,12 +194,12 @@ const PreferencesForm = () => {
                         </div>
                         <div id="contact-input">
                             {
-                                preferences.contact_type === "Numero Telefónico" ? (
+                                preferences.contact === "Numero Telefónico" ? (
                                     <input
                                         type="number"
                                         placeholder='000-0000-0000'
                                         className='w-100 form-control'
-                                        name='contact'
+                                        name='contact_type'
                                     />
                                 ) :
                                     preferences.contact_type === "Discord" || preferences.contact_type === "Slack" ? (
