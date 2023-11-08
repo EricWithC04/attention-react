@@ -76,8 +76,18 @@ const UserDataForm = () => {
     }
 
     const errors = useMemo(() => {
-        let formErrors = {}
-        if (!errorsActive) return {};
+        let formErrors = {
+            name: "",
+            ocupation: "",
+            email: "",
+            description: "",
+        }
+        if (!errorsActive) return {
+            name: "",
+            ocupation: "",
+            email: "",
+            description: "",
+        };
         if (!userData.name.length) formErrors.name = "El nombre de usuario no debe estár vacío!"
         else if (userData.name.length < 8) formErrors.name = "El nombre de usuario es demasiado corto!"
         else if (userData.name.length > 40) formErrors.name = "El nombre de usuario es demasiado largo!"
@@ -96,7 +106,7 @@ const UserDataForm = () => {
             onChange={handleChange}
             onSubmit={handleSubmit}
         >
-            <h1 class="fs-1 m-3 purple align-self-center">Datos de Usuario</h1>
+            <h1 className="fs-1 m-3 purple align-self-center">Datos de Usuario</h1>
             <div className='d-flex justify-content-center align-self-center flex-column w-75'>
                 <div className="m-3">
                     <label className="form-label">
