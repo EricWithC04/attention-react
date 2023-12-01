@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Swt from "sweetalert2"
+// import Swt from "sweetalert2"
 import logo from "../../assets/logo-2.png"
 
 const UserDataForm = () => {

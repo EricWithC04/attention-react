@@ -4,6 +4,7 @@ import PreferencesForm from './components/PreferencesForm/PreferencesForm'
 import UserProfile from './components/UserProfile/UserProfile'
 import UserDataForm from './components/UserDataForm/UserDataForm'
 import "./App.css"
+import MemoTest from './components/MemoTest/MemoTest'
 
 function App() {
   return (
@@ -13,16 +14,16 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={<UserProfile />}
+          element={<MemoTest />}
         />
-        <Route
+        {/* <Route
           path="/preferences"
           element={<PreferencesForm />}
         />
         <Route
           path="/userData"
           element={<UserDataForm />}
-        />
+        /> */}
       </Routes>
     </div>
   )
