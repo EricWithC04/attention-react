@@ -13,7 +13,7 @@ const MemoTest = () => {
         //Le pasamos un array que posea 2 veces el mismo emoji y desordenamos el array
         const shuffledEmojiList = shuffleArray([...emojiList, ...emojiList]);
         //Guardamos con el formato de objeto el array desordenado
-        setShuffledMemoBlocks(shuffledEmojiList.map( (emoji, i) => ({ index: i, emoji, flipped: false}) ));
+        setShuffledMemoBlocks(shuffledEmojiList.map( (emoji, i) => ({ index: i, emoji, flipped: false, success: false }) ));
     }, []);
 
     const shuffleArray = a => {
@@ -33,7 +33,12 @@ const MemoTest = () => {
         if (selectedMemoBlock === null) {
             setselectedMemoBlock(memoBlock);
         } else if (selectedMemoBlock.emoji === memoBlock.emoji) {
-            setselectedMemoBlock(null);
+            setTimeout(() => {
+                shuffledMemoBlocksCopy.splice(memoBlock.index, 1, { ...memoBlock, flipped: true, success: true });
+                shuffledMemoBlocksCopy.splice(selectedMemoBlock.index, 1, { ...selectedMemoBlock, flipped: true, success: true });
+                setShuffledMemoBlocks(shuffledMemoBlocksCopy);
+                setselectedMemoBlock(null);
+            }, 500);
         } else {
             setAnimating(true)
             setTimeout(() => {

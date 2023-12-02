@@ -9,7 +9,7 @@ const MemoBlock = ({ handleMemoClick, animating, memoBlock }) => {
                 <div className={style.memoBlockFront}>
                     <img src={logo} />
                 </div>
-                <div className={style.memoBlockBack}>
+                <div className={`${style.memoBlockBack} ${memoBlock.success ? style.memoBlockSuccess : ''}`}>
                     {memoBlock.emoji}
                 </div>
             </div>
