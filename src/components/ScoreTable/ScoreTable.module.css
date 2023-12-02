@@ -1,0 +1,22 @@
+.scoreTable {
+    height: 180px;
+    width: 300px;
+    outline: 1px solid #cccccc;
+    border-radius: 25px;
+    box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    margin-top: 150px;
+}
+
+.headerScoreTable {
+    height: 18%
+}
+
+.verticalLine {
+    background-color: #cccccc;
+    width: 2px;
+}
+
+.scoreTableContent {
+    width: 49%;
+}
