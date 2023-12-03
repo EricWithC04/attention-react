@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useMemoTestContext } from '../context/MemoTestContext';
 
 export const useMemoTest = (emojis) => {
@@ -8,6 +8,7 @@ export const useMemoTest = (emojis) => {
     const [shuffledMemoBlocks, setShuffledMemoBlocks] = useState([]);
     const [selectedMemoBlock, setselectedMemoBlock] = useState(null);
     const [animating, setAnimating] = useState(false);
+    const [memoComplete, setMemoComplete] = useState(false);
 
     const {
         setScore
@@ -43,6 +44,15 @@ export const useMemoTest = (emojis) => {
                 setShuffledMemoBlocks(shuffledMemoBlocksCopy);
                 setselectedMemoBlock(null);
                 setScore(prev => prev + 3)
+
+                //evaluamos si terminaron todos los bloques y terminamos el juego
+                const currentMemoComplete = shuffledMemoBlocksCopy.every(memoBlock => memoBlock.success === true)
+                if (currentMemoComplete) {
+                    setTimeout(() => {
+                        alert("Fin del juego")
+                    }, 600)
+                }
+                setMemoComplete(currentMemoComplete)
             }, 500);
         } else {
             setAnimating(true)
@@ -52,7 +62,7 @@ export const useMemoTest = (emojis) => {
                 setShuffledMemoBlocks(shuffledMemoBlocksCopy);
                 setselectedMemoBlock(null);
                 setAnimating(false);
-            }, 800);
+            }, 500);
         }
     }
 
