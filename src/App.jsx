@@ -5,6 +5,8 @@ import UserProfile from './components/UserProfile/UserProfile'
 import UserDataForm from './components/UserDataForm/UserDataForm'
 import "./App.css"
 import MemoTest from './components/MemoTest/MemoTest'
+import ScoreTable from './components/ScoreTable/ScoreTable'
+import { MemoTestProvider } from './components/MemoTest/context/MemoTestContext'
 
 function App() {
   return (
@@ -12,9 +14,17 @@ function App() {
       className="container w-100 d-flex justify-content-center align-items-center"
     >
       <Routes>
+        {/* <Route
+          path="/"
+          element={<ScoreTable />}
+        /> */}
         <Route
           path="/"
-          element={<MemoTest />}
+          element={
+            <MemoTestProvider>
+              <MemoTest />
+            </MemoTestProvider>
+          }
         />
         {/* <Route
           path="/preferences"

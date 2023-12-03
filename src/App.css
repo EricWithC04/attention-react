@@ -6,6 +6,10 @@
   background-color: #430671;
 }
 
+.bg-purple-light {
+  background-color: #874ab5;
+}
+
 .bg-purple:hover {
   background-color: #ffffff;
   color: #430671 !important;

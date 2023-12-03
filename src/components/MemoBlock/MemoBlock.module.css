@@ -46,6 +46,7 @@
 
 .memoBlockSuccess {
     background-color: #66ff66 !important;
+    transition: 0.6s;
 }
 
 .memoBlockFront {

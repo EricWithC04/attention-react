@@ -1,14 +1,18 @@
 import React from 'react'
 import style from "./ScoreTable.module.css"
 import { useTimer } from './hook/useTimer'
+import { useMemoTestContext } from '../MemoTest/context/MemoTestContext'
 
 const ScoreTable = () => {
 
     const {
         timer,
-        score,
         handleClick
-    } = useTimer(5)
+    } = useTimer(45)
+
+    const {
+        score
+    } = useMemoTestContext()
 
     return (
         <div className={style.scoreTable}>

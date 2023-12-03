@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 export const useTimer = (initialTime) => {
 
     const [ timer, setTimer ] = useState(initialTime)
     const [ runTime, setRunTime ] = useState(true)
-    const [ score, setScore ] = useState("0")
 
     useEffect(() => {
         let interval;
@@ -40,7 +39,6 @@ export const useTimer = (initialTime) => {
 
     return {
         timer,
-        score,
         handleClick
     }
 }
