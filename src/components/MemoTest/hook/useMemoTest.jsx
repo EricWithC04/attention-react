@@ -8,10 +8,11 @@ export const useMemoTest = (emojis) => {
     const [shuffledMemoBlocks, setShuffledMemoBlocks] = useState([]);
     const [selectedMemoBlock, setselectedMemoBlock] = useState(null);
     const [animating, setAnimating] = useState(false);
-    const [memoComplete, setMemoComplete] = useState(false);
 
     const {
-        setScore
+        setScore,
+        setMemoComplete,
+        setRunTime,
     } = useMemoTestContext()
 
     useEffect( () => {
@@ -48,11 +49,12 @@ export const useMemoTest = (emojis) => {
                 //evaluamos si terminaron todos los bloques y terminamos el juego
                 const currentMemoComplete = shuffledMemoBlocksCopy.every(memoBlock => memoBlock.success === true)
                 if (currentMemoComplete) {
+                    setMemoComplete(currentMemoComplete)
+                    setRunTime(false)
                     setTimeout(() => {
                         alert("Fin del juego")
                     }, 600)
                 }
-                setMemoComplete(currentMemoComplete)
             }, 500);
         } else {
             setAnimating(true)

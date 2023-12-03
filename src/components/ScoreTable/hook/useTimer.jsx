@@ -1,16 +1,22 @@
 import { useState, useEffect } from 'react'
+import { useMemoTestContext } from '../../MemoTest/context/MemoTestContext'
 
 export const useTimer = (initialTime) => {
 
     const [ timer, setTimer ] = useState(initialTime)
-    const [ runTime, setRunTime ] = useState(true)
+
+    const {
+        runTime,
+        setRunTime
+    } = useMemoTestContext()
 
     useEffect(() => {
         let interval;
 
-        if (runTime === false) {
+        if (runTime === false && timer === 0) {
             setTimeout(() => {
-                // alert("Tiempo!!!")
+                alert("Se ha terminado el tiempo!")
+                window.location.reload()
             }, 1000)
         }
         
